@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ ebook.name }}</h1>
+    {% if ebook.file_format == 'PDF' %}
+        <div id="pdf-viewer"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+        <script>
+            // PDF.js viewer options
+            var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+            // URL of the PDF file
+            var pdfUrl = "{{ ebook.ebook_file.url }}";
+
+            // Render the PDF file
+            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc) {
+                var pdfViewer = document.getElementById('pdf-viewer');
+                for (var i = 1; i <= pdfDoc.numPages; i++) {
+                    var page = document.createElement('div');
+                    pdfViewer.appendChild(page);
+                    pdfDoc.getPage(i).then(function(pdfPage) {
+                        var viewport = pdfPage.getViewport({ scale: 1.5 });
+                        var canvas = document.createElement('canvas');
+                        var context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+                        page.appendChild(canvas);
+                        pdfPage.render({
+                            canvasContext: context,
+                            viewport: viewport
+                        });
+                    });
+                }
+            });
+        </script>
+    {% else %}
+        <p>This eBook format is not supported for online viewing. <a href="{{ ebook.ebook_file.url }}">Download</a></p>
+    {% endif %}
+{% endblock %}

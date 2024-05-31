@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ebook List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: black; /* Set background color of the entire page to black */
+            color: white; /* Set text color of the entire page to white */
+        }
+        .ebook-card {
+            margin-bottom: 20px;
+            background-color: #2c6ca0; /* Set background color of the eBook cards */
+            color: white; /* Set text color of the eBook cards to white */
+        }
+        .ebook-card .card-body {
+            padding: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4 mb-4">All Ebooks</h1>
+        <div class="row">
+            {% for ebook in ebooks %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card ebook-card">
+                        <div class="card-body">
+                            <h1 class="card-title">Book Name: {{ ebook.name }}</h1>
+                            <h6 class="card-subtitle mb-2 text-info">Author: {{ ebook.author }}</h6>
+                            <p class="card-text">ISBN: {{ ebook.isbn }}</p>
+                            <p class="card-text">Category: {{ ebook.category.name }}</p>
+                            <p class="card-text">Ratings: {{ ebook.ratings }}</p>
+                            <p class="card-text">Format: {{ ebook.file_format }}</p>
+                            {% if ebook.file_format == 'PDF' %}
+                                <a href="{% url 'read_ebook' ebook.id %}" class="card-link">Read Online</a>
+                            {% else %}
+                                <a href="{{ ebook.ebook_file.url }}" class="card-link">Download</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
