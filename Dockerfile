@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r re
 
 
 # Copy project files to the working directory
-COPY . .
+COPY . /app/
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
