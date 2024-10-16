@@ -8,14 +8,12 @@ ENV PYTHONUNBUFFERED=1
 # Set work directory
 WORKDIR /backend
 
-# Install dependencies
-COPY requirements.txt /app/
-
+# Copy project files to the working directory
+COPY . .
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 
-# Copy project files to the working directory
-COPY . .
+
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
