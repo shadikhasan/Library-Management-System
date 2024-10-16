@@ -1,17 +1,23 @@
-FROM python:3.11-alpine
+# Use the official Python image as the base image
+FROM python:3.10-slim
 
-ENV PYTHONUNBUFFERED 1
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-RUN apk add --update --no-cache postgresql-client
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
-        gcc libc-dev linux-headers postgresql-dev
-COPY ./requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
-RUN apk del .tmp-build-deps
+# Set work directory
+WORKDIR /backend
 
-RUN mkdir /app
-WORKDIR /app
-COPY ./app /app
+# Install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-RUN adduser -D user
-USER user
+
+# Copy project files to the working directory
+COPY . .
+
+# Expose port 8000 to the outside world
+EXPOSE 8000
+
+# Command to run the Django development server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
