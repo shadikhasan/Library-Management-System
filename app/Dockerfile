@@ -9,7 +9,8 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /backend
 
 # Install dependencies
-COPY requirements.txt ./
+COPY requirements.txt /app/
+
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 
