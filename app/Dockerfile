@@ -6,14 +6,13 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Set work directory
-WORKDIR /backend
+WORKDIR /app
 
-# Copy project files to the working directory
-COPY . /app/
+# Copy the contents of the app directory from the host to the container
+COPY ./app /app
+
+# Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
-
-
-
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
