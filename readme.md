@@ -71,9 +71,6 @@ The API will then be available at [http://127.0.0.1:8000/](http://127.0.0.1:8000
 The API will then be available at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 
-### Celery
-- `docker-compose run app sh -c "celery -A app worker -l INFO"`
-- `docker-compose run app sh -c "celery -A app beat -l INFO"`
 
 ---
 ## Development Guide
