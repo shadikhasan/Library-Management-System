@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /backend
 
 # Copy project files to the working directory
-COPY . ./app
+COPY . /app/
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 
